@@ -1,0 +1,87 @@
+.page-container {
+  max-width: 1080px;
+  width: 96%;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+}
+
+.box {
+  background-color: #fff;
+  padding: 2rem 1.75rem;
+  border-radius: 0.5rem;
+}
+
+.content {
+  display: flex;
+  gap: 1rem;
+  align-items: start;
+}
+
+.movies {
+  flex: 2;
+}
+
+.favs {
+  flex: 1;
+}
+
+.cal {
+  font-family: "Cal Sans", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+  color: #2a2930;
+  font-family: "Cal Sans", sans-serif;
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 1;
+  padding-top: 0.25rem;
+  color: #2a2930;
+  font-family: "Cal Sans", sans-serif;
+  background-color: #d6d9e1;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.movie-card {
+  padding: 12px;
+  border-bottom: 1px solid #d6d6d6;
+}
+
+.movie-card:last-child {
+  border-bottom: 0;
+}
+.movie-card:hover {
+  background-color: #f4f2f5;
+}
+
+.movie-card a {
+  text-decoration: none;
+  color: black;
+}
+
+.movie-card h3 {
+  color: blue;
+}
+
+.movie-details {
+  padding: 12px;
+}
+
+.movie-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d6d9e1;
+  border-radius: 7px;
+  padding: 12px;
+}
