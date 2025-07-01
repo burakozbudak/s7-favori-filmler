@@ -1,71 +1,70 @@
-// movies arrayini movies.js dosyasından import et
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import movies from "../movies.js";
 
-export default function MovieDetails(props) {
-  const { onSave } = props;
-  const { movies } = props;
+export default function MovieDetails({ onSave, savedMovies }) {
   const { id } = useParams();
-  const history = useHistory();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  /*
-    - useParams hook'unu kullanarak URL'den id'yi al.
-    - useHistory hook'unu kullanarak geri dönmek için history nesnesini al.
-  */
-  /*
-    - URL'deki id'yi params'dan al (ipucu: react-router-dom@5 dokümantasyonuna bakabilirsin.)
-    - movies arrayinde o id ye sahip elemanı alttaki movie değişkenine eşitle
-  */
-  const movie = movies.find((movie) => movie.id.toString() === id);
+  // Film bulma işlemi
+  const movie =
+    movies.find((m) => m.id.toString() === id) || location.state?.movie;
+
+  // Geri dönme fonksiyonu
   const handleGoBack = () => {
-    // Geri dön butonuna tıklandığında bir önceki sayfaya git
-    history.goBack();
+    navigate(-1); // Bir önceki sayfaya dön
   };
+
+  // Kaydetme fonksiyonu
   const handleSave = () => {
-    // Kaydet butonuna tıklandığında bu filmi kaydedilenler filmler state'ine ekle
-    if (onSave && movie) {
+    if (onSave && movie && !savedMovies.some((m) => m.id === movie.id)) {
       onSave(movie);
     }
   };
 
+  // Film bulunamazsa hata sayfası göster
   if (!movie) {
     return (
-      <div className="movies box">
-        <h2>Film bilgisi bulunamadı.</h2>
-        <div className="movie-footer">
-          {/* Geri dön butonuna tıklandığında bir önceki sayfaya gönder */}
-          <button onClick={handleGoBack}>Geri dön</button>
-        </div>
+      <div className="error-page">
+        <h2>Film bulunamadı!</h2>
+        <button onClick={() => navigate("/")}>Ana Sayfaya Dön</button>
       </div>
     );
   }
 
-  const { title, director, metascore, stars } = movie;
+  // Film bilgilerini ayır
+  const { title, director, metascore, stars, description } = movie;
 
+  // Film detaylarını göster
   return (
-    <div className="movies box">
+    <div className="movie-details">
       <h2>{title}</h2>
-      <div className="movie-details">
-        <p>Film ID: {id}</p>
+      <div className="details-content">
         <p>
-          <strong>Director:</strong> {director}
+          <strong>Yönetmen:</strong> {director}
         </p>
+        {metascore && (
+          <p>
+            <strong>Puan:</strong> {metascore}
+          </p>
+        )}
         <p>
-          <strong>Metascore:</strong> {metascore}
+          <strong>Oyuncular:</strong> {stars.join(", ")}
         </p>
-        <p>
-          <strong>Actors:</strong> {stars.join(", ")}
-        </p>
+        {description && (
+          <p>
+            <strong>Konu:</strong> {description}
+          </p>
+        )}
       </div>
-      <div className="movie-footer">
-        {/* Geri dön butonuna tıklandığında bir önceki sayfaya gönder */}
+      <div className="action-buttons">
         <button onClick={handleGoBack} data-testid="goBackBtn">
-          Geri dön
+          Geri Dön
         </button>
-        {/* kaydet butonuna tıklandığında bu filmi kaydedilenler filmler state'ine ekle */}
-        <button onClick={handleSave}>Kaydet</button>
+        {!savedMovies.some((m) => m.id === movie.id) && (
+          <button onClick={handleSave}>Kaydet</button>
+        )}
       </div>
     </div>
   );
 }
-
-// bonus: Bu componentta 2 tane return var. Nasıl düzgün çalışabiliyor?

@@ -1,3 +1,4 @@
+import React from "react";
 import { Link } from "react-router-dom";
 
 export default function MovieBox(props) {
@@ -8,7 +9,7 @@ export default function MovieBox(props) {
   // Ayrıca id değerini de kullanarak Link oluşturacak.
 
   return (
-    <Link to={`/filmler/${id}`} className="movie-caerd">
+    <Link to={`/filmler/${id}`} className="movie-card">
       <div className="movie-card-content">
         {/*
         filme tıklanınca /filmler/:id route'una yönlenmeli.
